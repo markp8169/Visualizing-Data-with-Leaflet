@@ -29,12 +29,9 @@ function createMap(earthquakes) {
       "access_token=pk.eyJ1IjoibWFya3A4MTY5IiwiYSI6ImNqcXp2aG4zaTAycGw0M3AzamVyYmg4bjcifQ.EtghhXIAqZWVVc06Ier7sA");
     var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}?" +
       "access_token=pk.eyJ1IjoibWFya3A4MTY5IiwiYSI6ImNqcXp2aG4zaTAycGw0M3AzamVyYmg4bjcifQ.EtghhXIAqZWVVc06Ier7sA");
-    var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?" +
-      "access_token=pk.eyJ1IjoibWFya3A4MTY5IiwiYSI6ImNqcXp2aG4zaTAycGw0M3AzamVyYmg4bjcifQ.EtghhXIAqZWVVc06Ier7sA");
     var baseMaps = {
       "Outdoors": outdoors,
       "Satellite": satellite,
-      "Dark Map": darkmap
     };
 // Tectonic plates and overlay
     var tectonicPlates = new L.LayerGroup();
@@ -44,15 +41,14 @@ function createMap(earthquakes) {
     };
 // Make map with layers. Set Latitude and Longitude for center and amount to initially zoom in.
     var myMap = L.map("map", {
-      center: [
-        35.00, -80.00],
+      center: [35.00, -80.00],
       zoom: 3.00,
-      layers: [outdoors, earthquakes, tectonicPlates]
+      layers: [satellite, earthquakes, tectonicPlates]
     }); 
 // Data for tectonic plates. Line color and width
     d3.json(tectonicPlatesURL, function(plateData) {
       L.geoJson(plateData, {
-        color: "red",
+        color: "orange",
         weight: 2
       })
       .addTo(tectonicPlates);
@@ -86,7 +82,7 @@ function createMap(earthquakes) {
     d > 1   ? '#FF0' :
               '#9F3';
   }
-//radius of circle multiplied by 10,000 of the earthquake magnitude. 
+//radius of circle multiplied by 15,000 of the earthquake magnitude. 
   function getRadius(value){
-    return value*10000
+    return value*15000
   }
